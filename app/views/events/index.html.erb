@@ -4,8 +4,8 @@
   <% @events.each do |event| %>
       <li>
         <%= event.name %>
-        <%= event.location %>
-        <%= event.event_datetime %>
+        <%= " - " + event.location %>
+        <%= " - " + event.event_datetime.strftime("%Y-%m-%d") %>
       </li>
   <% end %>
 </ul>
