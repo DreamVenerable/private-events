@@ -2,3 +2,7 @@
 
 <p>Location: <%= @event.location %></p>
 <p>Location: <%= @event.event_datetime.strftime("%Y-%m-%d") %></p>
+
+<% if user_signed_in? && !current_user.attending?(@event) %>
+  <%= render 'attendances/form' %>
+<% end %>
