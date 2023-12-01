@@ -1,4 +1,4 @@
-<%= form_with(model: [@event, Attendance.new]) do |f| %>
-  <%= f.hidden_field :event_id, value: @event[:id]  %>
+<%= form_with model: @attendance, url: event_attendances_path(@event[:id]), method: 'post' do |f| %>
+  <%= f.hidden_field :attended_event_id, value: @event[:id]  %>
   <%= f.submit 'Attend Event' %>
 <% end %>

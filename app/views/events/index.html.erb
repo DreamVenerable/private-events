@@ -3,9 +3,7 @@
 <ul>
   <% @events.each do |event| %>
       <li>
-        <%= event.name %>
-        <%= " - " + event.location %>
-        <%= " - " + event.event_datetime.strftime("%Y-%m-%d") %>
+        <%= link_to "#{event.name}", event_path(event.id) %>
       </li>
   <% end %>
 </ul>
