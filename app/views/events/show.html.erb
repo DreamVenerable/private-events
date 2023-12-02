@@ -3,8 +3,31 @@
 <p>Location: <%= @event.location %></p>
 <p>Location: <%= @event.event_datetime.strftime("%Y-%m-%d") %></p>
 
+<h2> Attendees </h2>
+
+<% @event.attendees.each do |person| %>
+  <li>
+    <%= person.name %>
+  </li>
+<%end%><br>
+
 <% if user_signed_in? && !current_user.attending?(@event[:id]) %>
+
   <%= render 'attendances/form' %>
-<% end %>
+
+<% elsif user_signed_in? && current_user.attending?(@event[:id]) %>
+
+  <%= form_with model: @attendance, url: event_attendance_path(@event[:id], @event.attendance_ids), method: 'delete' do |f| %>
+      <%= f.hidden_field :id, value: @attendance.attended_event.id %>
+      <%= f.submit 'Leave Event' %>
+  <% end %>
+
+<% end %><br>
+
+<%= link_to "Delete Event", event_path(@event), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?" } %>
+
+<%= link_to "Edit Event", edit_event_path %>
 
 <%= link_to "Events", events_path %>

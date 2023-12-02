@@ -4,9 +4,33 @@
 <% if @created_events.any? %>
   <ul>
     <% @created_events.each do |event| %>
-      <li><%= event.name %></li>
+      <li><%= link_to "#{event.name}", event_path(event.id) %></li>
     <% end %>
   </ul>
 <% else %>
   <p>No events created yet.</p>
 <% end %>
+
+<h2>Attending Events:</h2>
+<% if @user.attendances.any? %>
+  <ul>
+    <% @user.attended_events.where(event_datetime: (Time.now)..).each do |event| %>
+      <li><%= link_to "#{event.name}", event_path(event.id) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Not attending any events yet.</p>
+<% end %>
+
+<h2>Attended Events:</h2>
+<% if @user.attendances.any? %>
+  <ul>
+    <% @user.attended_events.where(event_datetime: ..(Time.now)).each do |event| %>
+      <li><%= link_to "#{event.name}", event_path(event.id) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No past events attended.</p>
+<% end %>
+
+<%= link_to "Events", events_path %>

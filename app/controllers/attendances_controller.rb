@@ -10,9 +10,16 @@ class AttendancesController < ApplicationController
     if @attendance.save
       redirect_to events_path, :notice => 'You are now attending the event.'
     else
-      flash.now[:error] = 'Failed to attend the event.'
+      flash[:error] = 'Failed to attend the event.'
       redirect_to event_path(id: attendance_params.value)
     end
+  end
+
+  def destroy
+    @attendance = Attendance.find(params[:id])
+    @attendance.destroy
+
+    redirect_to root_path, :notice => 'You have left the event.'
   end
 
   private
